@@ -275,7 +275,11 @@ export class GroupsService {
       Logger.log(
         `Update.Group groupID:${dto.id} affected:${result.affected} complete`,
       );
-    return await this.findOne(dto.id, true);
+
+    /* this method was failing to return after successful update of group.
+     return await this.findOne(dto.id, true); */
+
+    return await this.treeRepository.findOne({ where: { id: dto.id } });
   }
 
   async remove(id: number, user: any): Promise<void> {
